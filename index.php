@@ -21,12 +21,24 @@ body {
 main {
     width: 50em;
     margin: 5em auto;
+    text-align: center;
 }
 button, input[type="submit"], input[type="button"] {
+    font-size: 1.5em;
+    margin: 0.2em;
     border: 1px solid black;
     background-color: #fff;
     line-height: 2em;
     padding: 0 0.75em;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+button:focus {
+    background-color: #000;
+    color: #fff;
 }
 
 #visual {
@@ -41,15 +53,7 @@ button, input[type="submit"], input[type="button"] {
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 
 <script>
-var phase = 0;
-
-function updatePhase() {
-    phase++;
-
-    if (phase > 3) {
-        $('#next').hide();
-    }
-
+function updatePhase(phase) {
     $.ajax({
         method: "POST",
         url: "./handler.php",
@@ -58,11 +62,16 @@ function updatePhase() {
         console.log( "New phase: " + msg['new_phase'] );
     });
 }
-updatePhase();
+updatePhase(0);
 
 $(() => {
-    $("#next").click(() => {
-        updatePhase();
+    $("button").click((event) => {
+        var phase = parseInt($(event.target).data("phase"));
+        updatePhase(phase);
+    });
+
+    $("#reset").click(() => {
+
     });
 });
 </script>
@@ -73,7 +82,13 @@ $(() => {
     <h1>Marshmallow Feeder</h1>
     <div id="visual">
     </div>
-    <button id="next">Next</button>
+    <button data-phase="0">Move to Start State</button>
+    <button data-phase="1">Move to Marshmallow</button>
+    <button data-phase="2">Grip Marshmallow</button>
+    <button data-phase="3">Move to Mouth</button>
+    <button data-phase="4">Release Marshmallow</button>
+    <button data-phase="5">Start Autonomous</button>
+    <button data-phase="6">Reset Phase</button>
     <br />
 </main>
 

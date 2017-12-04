@@ -6,7 +6,7 @@
 
 <head>
 
-<title>Marshmallow</title>
+<title>Marshmallow Feeder</title>
 
 <style>
 * {
@@ -15,37 +15,66 @@
     font-weight: 400;
 }
 body {
-    background-color: #eee;
+    background-color: #fff;
     font-family: sans-serif;
 }
 main {
     width: 50em;
-    margin: 5em auto;
+    margin: 2em auto;
     text-align: center;
 }
+em {
+    color: #444;
+}
 button, input[type="submit"], input[type="button"] {
+    text-transform: lowercase;
     font-size: 1.5em;
     margin: 0.2em;
-    border: 1px solid black;
-    background-color: #fff;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
     line-height: 2em;
     padding: 0 0.75em;
+    width: 20.4em;
+    border-radius: 0.5em;
 }
-
-button:hover {
-    opacity: 0.8;
+.half {
+    width: 10em;
 }
 
 button:focus {
-    background-color: #000;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
+    outline: 0;
 }
 
 #visual {
-    margin: 1.5em 0;
-    background-color: #aaa;
+    margin: 4em 0 3em 0;
+    background-color: #fff;
+    background-size: contain;
+    background-image: url(assets/marshmallow_grip_alt.jpg);
+    background-position: bottom center;
+    background-repeat: no-repeat;
     width: 100%;
     height: 30em;
+}
+#visual[data-phase="0"] {
+    background-image: url(assets/marshmallow_calib.jpg);
+}
+#visual[data-phase="1"] {
+    background-image: url(assets/marshmallow_move.jpg);
+}
+#visual[data-phase="2"] {
+    background-image: url(assets/marshmallow_grip.jpg);
+}
+#visual[data-phase="3"] {
+    background-image: url(assets/marshmallow_mouth.jpg);
+}
+#visual[data-phase="4"] {
+    background-image: url(assets/marshmallow_release.jpg);
+}
+#visual[data-phase="5"] {
+    background-image: url(assets/marshmallow.gif);
 }
 </style>
 
@@ -67,6 +96,8 @@ updatePhase(0);
 $(() => {
     $("button").click((event) => {
         var phase = parseInt($(event.target).data("phase"));
+        // $("#visual").data("phase", phase);
+        $("#visual").attr("data-phase", phase);
         updatePhase(phase);
     });
 
@@ -79,17 +110,21 @@ $(() => {
 <body>
 
 <main>
-    <h1>Marshmallow Feeder</h1>
-    <div id="visual">
-    </div>
-    <button data-phase="0">Move to Start State</button>
-    <button data-phase="1">Move to Marshmallow</button>
-    <button data-phase="2">Grip Marshmallow</button>
-    <button data-phase="3">Move to Mouth</button>
-    <button data-phase="4">Release Marshmallow</button>
-    <button data-phase="5">Start Autonomous</button>
-    <button data-phase="6">Reset Phase</button>
+    <div id="visual"></div>
+    <button data-phase="5">Full Sequence</button>
+    <button data-phase="0">Reset</button>
     <br />
+    <br />
+    <button class="half" data-phase="1">Marshmallow</button>
+    <button class="half" data-phase="2">Grip</button>
+    <br />
+    <button class="half" data-phase="3">Mouth</button>
+    <button class="half" data-phase="4">Release</button>
+    <!-- <button data-phase="6">Reset Phase</button> -->
+    <br />
+    <br />
+    <br />
+    <em>ee106a final project -- nandita, william, brent, and josh</em>
 </main>
 
 </body>
